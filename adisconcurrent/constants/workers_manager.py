@@ -1,0 +1,2 @@
+WORKERS_DIRECTORY="Workers"
+MANIFEST_FILE="manifest.yaml"
