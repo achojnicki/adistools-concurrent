@@ -23,27 +23,29 @@ class Tasks:
         self._tasks.append([name,callback,execution_interval,0])
 
     def loop(self):
-        time_divider=self._time_divider
-        while self._root._active:
-            for a in self._tasks:
-                self._log.debug('Calling task: '+a[0])
-                #execution interval doesnt matter
-                if not a[2]:
-                    a[1]()
-                    self._log.debug('Task ')
-
-
-                #execution interval matter
-                else:
-                    #exec time milis
-                    t=time()*time_divider
-
-                    if t-a[3]>=a[2]:
+        try:
+            time_divider=self._time_divider
+            while self._root._active:
+                for a in self._tasks:
+                    self._log.debug('Calling task: '+a[0])
+                    #execution interval doesnt matter
+                    if not a[2]:
                         a[1]()
-                        a[3]=time()*time_divider
-                self._log.debug('finished. time of execution: '+str(a[3]))
-            sleep(self._config.tasks.delay)
-
+                        self._log.debug('Task ')
+    
+    
+                    #execution interval matter
+                    else:
+                        #exec time milis
+                        t=time()*time_divider
+    
+                        if t-a[3]>=a[2]:
+                            a[1]()
+                            a[3]=time()*time_divider
+                    self._log.debug('finished. time of execution: '+str(a[3]))
+                sleep(self._config.tasks.delay)
+        except KeyboardInterrupt:
+            self._root.stop()
     def start(self):
         self._log.info('Starting tasks module...')
         self.loop()

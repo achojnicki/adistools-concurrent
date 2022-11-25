@@ -5,22 +5,28 @@ from pymongo import MongoClient
 
 import config
 import requests
+import signal
+
 
 class pixel_tracker_processor:
     def __init__(self):
+        self._busy=False
+        
         self._config=config
         
+        
         self._log=adislog(
-            backends=['file_plain','terminal_table'],
+            backends=['file_plain'],
             debug=True,
             replace_except_hook=False,
-            log_file='log.log'
+            log_file='logs/log.log'
             )
         
         self._mongo_conn=MongoClient(
             self._config.mongo.host,
             self._config.mongo.port
             )
+        
         self._mongo_db=self._mongo_conn[self._config.mongo.db]
         self._pixel_trackers=self._mongo_db['pixel_trackers']
         self._pixel_trackers_metrics=self._mongo_db['pixel_trackers_metrics']
@@ -49,7 +55,7 @@ class pixel_tracker_processor:
             self._log.success('Obtained host details.')
             return d if d['status'] == 'success' else None
         except:
-            self._log.error('Obtaining host details failded.')
+            self._log.error('Obtaining host details failed.')
             return None
 
     def _tracker_exists(self, tracker_uuid):
@@ -63,6 +69,8 @@ class pixel_tracker_processor:
         
     
     def _incoming_data_callback(self, channel, method_frame, header_frame, data):
+        self._busy=True
+        
         channel.basic_ack(delivery_tag=method_frame.delivery_tag)
         
         data=loads(data.decode('utf-8'))
@@ -94,13 +102,16 @@ class pixel_tracker_processor:
                 self._log.warning("tracker-uuid({tracker_uuid}) doesn't exists".format(tracker_uuid=tracker_uuid))
         else:
             self._log.warning("tracker_uuid isn't provided")
+        self._busy=False
+        
+    
     def start(self):
         try:
             self._rabbitmq_channel.start_consuming()
         except:
-            raise
             self._rabbitmq_channel.stop_consuming()
-            
+            raise
+    
 if __name__=="__main__":
     ptip=pixel_tracker_processor()
     ptip.start()

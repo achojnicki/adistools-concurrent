@@ -1,3 +1,9 @@
+class startup:
+    daemonize=True
+    
+class daemon:
+    pid_file='adisconcurrent.pid'
+    
 class rabbitmq:
     host="127.0.0.1"
     port=5672

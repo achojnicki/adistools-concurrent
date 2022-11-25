@@ -1,0 +1,102 @@
+Thu 24:Nov:2022 14:16:42 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:16:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 14:16:42 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 14:16:42 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 14:16:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 14:16:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:10390 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 14:16:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:10392 PPID:10391 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 14:17:53 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:17:53 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 14:17:53 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 14:17:53 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 14:17:53 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 14:17:53 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:10442 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 14:17:53 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:10444 PPID:10443 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 14:18:06 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:10444 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 14:36:00 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:36:00 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 14:36:00 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 14:36:00 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 14:36:00 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 14:36:00 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:11114 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 14:36:00 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:11116 PPID:11115 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 14:37:26 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:12028 PPID:11116 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:40:11 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:40:11 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 14:40:11 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 14:40:11 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 14:40:11 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 14:40:11 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:12151 PPID:9000 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 14:40:11 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:12153 PPID:12152 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 14:40:11 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:12154 PPID:12153 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 14:50:02 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:11116 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 14:50:04 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:12153 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 17:44:13 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:44:13 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 17:44:13 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 17:44:13 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 17:44:13 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 17:44:13 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:15356 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 17:44:13 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:15358 PPID:15357 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 17:44:41 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15631 PPID:15358 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:44:46 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:44:46 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 17:44:46 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 17:44:46 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 17:44:46 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 17:44:46 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:15638 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 17:44:46 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:15640 PPID:15639 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 17:44:46 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15641 PPID:15640 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:45:15 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:15640 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 17:45:18 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:15358 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 17:46:33 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:46:33 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 17:46:33 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 17:46:33 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 17:46:33 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 17:46:33 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:15738 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 17:46:33 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:15740 PPID:15739 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 17:46:33 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15741 PPID:15740 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:46:37 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:55 stop PID:15740 PPID:1 CWD:/mnt/c/Dev/adisconcurrent Got the exit signal. starting the stop procedure...
+Thu 24:Nov:2022 17:46:42 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:46:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 17:46:42 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 17:46:42 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 17:46:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 17:46:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:15749 PPID:15304 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 17:46:42 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:15751 PPID:15750 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 17:46:42 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15752 PPID:15751 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:47:07 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15791 PPID:15751 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 17:47:12 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:15799 PPID:15751 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 21:43:58 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 21:43:58 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 21:43:58 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 21:43:58 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 21:43:58 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 21:43:58 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:21007 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 21:43:58 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:21009 PPID:21008 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 21:43:59 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:21010 PPID:21009 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 21:47:49 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 21:47:49 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:38 __init__ PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialising Adi's Concurrent
+Thu 24:Nov:2022 21:47:49 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/workers_manager/__init__.py:22 __init__ PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialisation of workers_manager successed!
+Thu 24:Nov:2022 21:47:49 SUCCESS:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:52 __init__ PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Initialisation of adisconcurrent finished
+Thu 24:Nov:2022 21:47:49 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:65 start PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent Called starting procedure
+Thu 24:Nov:2022 21:47:49 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/__main__.py:67 start PID:21267 PPID:20944 CWD:/mnt/c/Dev/adisconcurrent starting as daemon
+Thu 24:Nov:2022 21:47:49 INFO:/mnt/c/Dev/adisconcurrent/./adisconcurrent/tasks.py:50 start PID:21269 PPID:21268 CWD:/mnt/c/Dev/adisconcurrent Starting tasks module...
+Thu 24:Nov:2022 21:47:50 INFO:/usr/lib/python3/dist-packages/adislog/__init__.py:97 _init_msg PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent adislog module initializated.
+Thu 24:Nov:2022 21:48:10 ERROR:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:58 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtaining host details failed.
+Thu 24:Nov:2022 21:48:10 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:13:57 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:13:57 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:14:56 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:14:56 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:14:56 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:14:56 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:15:43 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:15:43 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:16:46 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:16:46 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:17:38 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:17:38 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
+Thu 24:Nov:2022 22:18:39 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:55 _get_addr_details PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Obtained host details.
+Thu 24:Nov:2022 22:18:39 SUCCESS:/mnt/c/Dev/adisconcurrent/Workers/pixel_tracker_processor/worker.py:99 _incoming_data_callback PID:21270 PPID:21269 CWD:/mnt/c/Dev/adisconcurrent Incoming data processed successfully.
