@@ -2,8 +2,8 @@ from workers_manager import Workers_manager
 from tasks import Tasks
 from daemon import Daemon
 from pathlib import Path
+from adisconfig import adisconfig
 
-import config
 import sys
 import adislog
 import os
@@ -11,30 +11,21 @@ import os
 class adisconcurrent:
     _active=True
     _daemon=None
-    _config=config
-    _log=adislog.adislog(
-        log_file="logs/log.log",
-        replace_except_hook=False,
-        debug=True if 'debug' in sys.argv else False
-    )
+    _config=None
+    _log=None
 
     _workers_manager=None
     _tasks=None
     
-    def _prepare_pipes_bindings(self):
-        null_stdin=open('/dev/null','r')
-        null_stdout=open('/dev/null','a+')
-        null_stderr=open('/dev/null','a+')
-        
-        os.dup2(sys.stdin.fileno(),null_stdin.fileno())
-        os.dup2(sys.stdout.fileno(),null_stdout.fileno())
-        os.dup2(sys.stderr.fileno(),null_stderr.fileno())
-        
-        sys.stdin=None
-        sys.stdout=None
-        sys.stderr=None
-        
     def __init__(self):
+        self._config=adisconfig('/etc/adisconcurrent/config.yaml')
+        
+        self._log=adislog.adislog(
+            log_file=Path(self._config.log.logs_directory).joinpath("adisconcurrent_main_process.log"),
+            replace_except_hook=False,
+            debug=self._config.log.debug
+            )
+        
         self._log.info("Initialising Adi's Concurrent")
         
         if self._config.general.daemonize:
@@ -51,6 +42,7 @@ class adisconcurrent:
 
         self._log.success("Initialisation of adisconcurrent finished")
 
+        
     def stop(self):
         self._log.info('Got the exit signal. starting the stop procedure...')
         

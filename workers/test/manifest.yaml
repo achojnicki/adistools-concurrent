@@ -1,6 +1,0 @@
-enabled: False
-name: Port Scanner
-exec: /usr/bin/python3
-script: pixel_tracker.py
-workers: 1
-    

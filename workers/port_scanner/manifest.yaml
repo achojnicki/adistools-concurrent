@@ -1,6 +1,0 @@
-enabled: False
-name: Port Scanner
-exec: C:\Users\arjel\AppData\Local\Programs\Python\Python310\python.exe
-script: port_worker.py
-workers: 10
-    

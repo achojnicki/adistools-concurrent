@@ -27,12 +27,9 @@ class Tasks:
             time_divider=self._time_divider
             while self._root._active:
                 for a in self._tasks:
-                    self._log.debug('Calling task: '+a[0])
-                    #execution interval doesnt matter
+                    #execution interval doesn't matter
                     if not a[2]:
                         a[1]()
-                        self._log.debug('Task ')
-    
     
                     #execution interval matter
                     else:
@@ -42,7 +39,6 @@ class Tasks:
                         if t-a[3]>=a[2]:
                             a[1]()
                             a[3]=time()*time_divider
-                    self._log.debug('finished. time of execution: '+str(a[3]))
                 sleep(self._config.tasks.delay)
         except KeyboardInterrupt:
             self._root.stop()

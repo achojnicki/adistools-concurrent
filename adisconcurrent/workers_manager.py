@@ -1,4 +1,4 @@
-from constants.workers_manager import  MANIFEST_FILE
+from constants.workers_manager import MANIFEST_FILE
 from pathlib import Path
 from subprocess import Popen, PIPE
 from os import environ, getcwd, listdir
@@ -37,6 +37,7 @@ class Workers_manager:
             self._start_worker(name)
             
         self._log.debug('Workers started')
+        
     def _generate_python_path(self, worker_dir):
         return "{0}:{1}".format(os.getcwd(), worker_dir)
     
@@ -59,6 +60,7 @@ class Workers_manager:
             "name":name,
             'process_obj': p
         })
+        
     def _clear_zombies(self):
         self._log.debug('Clearing zombie processes')
         for worker in self._active_workers:
@@ -81,8 +83,7 @@ class Workers_manager:
             
 
     def scan_for_modules(self):
-        path=Path(os.getcwd())
-        path=path.joinpath(self._config.general.workers_directory)
+        path=Path(self._config.general.workers_directory)
         for worker_dir in os.listdir(path):
             worker_directory=path.joinpath(worker_dir)
             if worker_directory.is_dir():
@@ -107,9 +108,4 @@ class Workers_manager:
         #start workers
         for worker in self._workers:
             self._start_workers(worker)
-                    
-                    
             
-
-
-

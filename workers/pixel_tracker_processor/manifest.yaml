@@ -1,6 +1,0 @@
-enabled: True
-name: Pixel Tracker Incoming Processor
-exec: /usr/bin/python3
-script: worker.py
-workers: 1
-    
