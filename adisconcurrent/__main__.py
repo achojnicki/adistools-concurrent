@@ -37,7 +37,7 @@ class adisconcurrent:
     def __init__(self):
         self._log.info("Initialising Adi's Concurrent")
         
-        if self._config.startup.daemonize:
+        if self._config.general.daemonize:
             self._daemon=Daemon(
                 root=self,
                 pidfile=self._config.daemon.pid_file

@@ -1,5 +1,6 @@
-class startup:
-    daemonize=True
+class general:
+    daemonize=False
+    workers_directory="Workers"
     
 class daemon:
     pid_file='adisconcurrent.pid'

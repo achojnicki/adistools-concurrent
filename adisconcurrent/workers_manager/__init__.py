@@ -1,5 +1,4 @@
-from constants.workers_manager import WORKERS_DIRECTORY, MANIFEST_FILE
-
+from constants.workers_manager import  MANIFEST_FILE
 from pathlib import Path
 from subprocess import Popen, PIPE
 from os import environ, getcwd, listdir
@@ -11,6 +10,7 @@ import os
 class Workers_manager:
     _root=None
     _log=None
+    _config=None
 
     _workers={}
     _active_workers=[]
@@ -18,7 +18,9 @@ class Workers_manager:
     def __init__(self, root):
         self._root=root
         self._log=root._log
-
+        
+        self._config=root._config
+        
         self._log.success('Initialisation of workers_manager successed!')
 
     def _count_active_workers(self, name:str):
@@ -80,7 +82,7 @@ class Workers_manager:
 
     def scan_for_modules(self):
         path=Path(os.getcwd())
-        path=path.joinpath(WORKERS_DIRECTORY)
+        path=path.joinpath(self._config.general.workers_directory)
         for worker_dir in os.listdir(path):
             worker_directory=path.joinpath(worker_dir)
             if worker_directory.is_dir():
