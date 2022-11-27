@@ -21,6 +21,7 @@ class adisconcurrent:
         self._config=adisconfig('/etc/adisconcurrent/config.yaml')
         
         self._log=adislog.adislog(
+            backends=['terminal'],
             log_file=Path(self._config.log.logs_directory).joinpath("adisconcurrent_main_process.log"),
             replace_except_hook=False,
             debug=self._config.log.debug
