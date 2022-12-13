@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from workers_manager import Workers_manager
 from tasks import Tasks
 from daemon import Daemon
@@ -44,7 +46,7 @@ class adisconcurrent:
         self._tasks=Tasks(self)
         
         #scanning for the workers
-        self._workers_manager.scan_for_workers)
+        self._workers_manager.scan_for_workers()
 
         #adding workers manager task to the event loop of main process
         self._tasks.add_task('workers_manager',self._workers_manager.task, 100)

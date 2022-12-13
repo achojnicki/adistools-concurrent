@@ -4,6 +4,10 @@ general:
 
 log:
     debug: False
+
+    main_log: /var/log/adisconcurrent/main.log
+    workers_log: /var/log/adisconcurrent/workers.log
+
     logs_directory: /var/log/adisconcurrent/
 
 daemon:
@@ -16,8 +20,5 @@ rabbitmq:
     user: adrian
     passwd: gwh28
 
-mongo:
-    db_url: mongodb://localhost:27017
-    db: adisscan
 tasks:
     delay: 0.1

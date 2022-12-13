@@ -1,13 +1,13 @@
+from pathlib import Path
 
 import os
 import sys
 import signal
-import pathlib
-
+import psutil
 
 class DaemonizeException(Exception):
     pass
-class PidFileException(DaemonizeException):
+class AnotherInstanceRunning(DaemonizeException):
     pass
 
 class Daemon:
@@ -55,13 +55,19 @@ class Daemon:
     def _remove_pidfile(self):
         os.remove(self._pidfile)
         
-    def _pid_exists(self, pid_file):
-        return pathlib.Path(pid_file).is_file()
+    def _pidfile_exists(self):
+        return Path(self._pidfile).is_file()
+
+    def _process_active(self):
+        try:
+            return psutil.Process(int(open(self._pidfile,'r').read())).status() in ['sleeping','running']
+        except psutil.NoSuchProcess:
+            return False
                
     def _set_env(self):
         os.setsid()
         os.umask(0)
-        
+    
     def stop(self):        
         self._root.stop()
         self._remove_pidfile()
@@ -71,7 +77,12 @@ class Daemon:
             self.stop()
         
     def daemonize(self):
-        
+        if self._pidfile_exists():
+            if self._process_active():
+                raise AnotherInstanceRunning
+            else:
+                self._remove_pidfile()
+
         self._fork()
         self._set_env()
         self._fork()
