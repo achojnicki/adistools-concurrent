@@ -7,6 +7,7 @@ import os
 import sys
 
 class Tasks:
+    _active=None
     _root=None
 
     #[name,callback,execution_delay(ms),previous_execution_time]
@@ -22,10 +23,10 @@ class Tasks:
     def add_task(self,name,callback,execution_interval=None):
         self._tasks.append([name,callback,execution_interval,0])
 
-    def loop(self):
+    def _loop(self):
         try:
             time_divider=self._time_divider
-            while self._root._active:
+            while self._active:
                 for a in self._tasks:
                     #execution interval doesn't matter
                     if not a[2]:
@@ -42,8 +43,11 @@ class Tasks:
                 sleep(self._config.tasks.delay)
         except KeyboardInterrupt:
             self._root.stop()
+
     def start(self):
         self._log.info('Starting tasks module...')
-        self.loop()
+        self._active=True
+        self._loop()
+
     def stop(self):
-        self.active=False
+        self._active=False

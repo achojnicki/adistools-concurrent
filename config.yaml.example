@@ -1,0 +1,23 @@
+general:
+    daemonize: False
+    workers_directory: /usr/lib/adisconcurrent-workers
+
+log:
+    debug: False
+    logs_directory: /var/log/adisconcurrent/
+
+daemon:
+    pid_file: /var/run/adisconcurrent.pid
+
+rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    vhost: /
+    user: adrian
+    passwd: gwh28
+
+mongo:
+    db_url: mongodb://localhost:27017
+    db: adisscan
+tasks:
+    delay: 0.1

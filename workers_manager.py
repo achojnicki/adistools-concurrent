@@ -1,10 +1,9 @@
 from constants.workers_manager import MANIFEST_FILE
 from pathlib import Path
-from subprocess import Popen, PIPE
-from os import environ, getcwd, listdir
+from subprocess import Popen
+from os import environ, getcwd, listdir, chdir, kill
 from yaml import safe_load
 
-import os
 
 
 class Workers_manager:
@@ -39,14 +38,16 @@ class Workers_manager:
         self._log.debug('Workers started')
         
     def _generate_python_path(self, worker_dir):
-        return "{0}:{1}".format(os.getcwd(), worker_dir)
+        return "{0}:{1}".format(getcwd(), worker_dir)
     
     def _start_worker(self,name):
         self._log.debug('Starting worker: '+name)
         worker=self._workers[name]
 
-        env=os.environ.copy()
+        env=environ.copy()
         env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'])
+        
+        chdir(worker['worker_dir'])
         p=Popen(
                 [
                     worker['exec'].absolute(),
@@ -82,9 +83,9 @@ class Workers_manager:
             return safe_load(manifest_file)
             
 
-    def scan_for_modules(self):
+    def scan_for_workers(self):
         path=Path(self._config.general.workers_directory)
-        for worker_dir in os.listdir(path):
+        for worker_dir in listdir(path):
             worker_directory=path.joinpath(worker_dir)
             if worker_directory.is_dir():
                 #TODO: add exceptions
@@ -97,10 +98,13 @@ class Workers_manager:
                         args['worker_dir']=worker_directory
                         self._declare_worker(**args)
                         
-    def stop_workers(self):
+    def _stop_workers(self):
         for worker in self._active_workers:
             process=worker['process_obj']
-            os.kill(process.pid, 15)
+            kill(process.pid, 15)
+    
+    def stop(self):
+        self._stop_workers()
 
     def task(self):
         # check for zombie processes
