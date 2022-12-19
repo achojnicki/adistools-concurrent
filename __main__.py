@@ -55,8 +55,8 @@ class adisconcurrent:
         self._uwsgi_manager.scan_for_uwsgi_ini_files()
 
         #adding workers manager task to the event loop of main process
-        self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
-        self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
+        self._tasks.add_task('workers_manager',self._workers_manager.task, 1000)
+        self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 1000)
 
         self._log.success("Initialisation of adisconcurrent successed")
 
