@@ -4,14 +4,14 @@ general:
 
 log:
     debug: False
-
-    main_log: /var/log/adisconcurrent/main.log
-    workers_log: /var/log/adisconcurrent/workers.log
-
     logs_directory: /var/log/adisconcurrent/
 
 daemon:
     pid_file: /var/run/adisconcurrent.pid
+
+uwsgi:
+    ini_directory: /etc/adisconcurrent/uwsgi
+    uwsgi_executable_path: /usr/local/bin/uwsgi
 
 rabbitmq:
     host: 127.0.0.1
@@ -21,4 +21,4 @@ rabbitmq:
     passwd: gwh28
 
 tasks:
-    delay: 0.1
+    interval: 0.1

@@ -1,11 +1,10 @@
-from constants.workers_manager import MANIFEST_FILE
+from imp import init_builtin
 from pathlib import Path
 from subprocess import Popen
 from os import environ, getcwd, listdir, chdir, kill
-from yaml import safe_load
 from copy import deepcopy
 
-class Workers_manager:
+class Uwsgi_manager:
     _root=None
     _log=None
     _config=None
@@ -16,11 +15,11 @@ class Workers_manager:
     def __init__(self, root):
         self._root=root
         self._log=root._log
-        self._log.info('Starting initialization of the Workers_manager')
+        self._log.info('Starting initialization of the Uwsgi_manager')
         
         self._config=root._config
         
-        self._log.success('Initialisation of workers_manager successed!')
+        self._log.success('Initialisation of successed!')
 
     def _count_active_workers(self, name:str):
         count=0
@@ -32,28 +31,21 @@ class Workers_manager:
     def _start_workers(self,name):
         self._log.info('Starting workers.')
         
-        for _ in range(self._count_active_workers(name),self._workers[name]['workers']):
+        for _ in range(self._count_active_workers(name),1):
             self._start_worker(name)
             
         self._log.success('Start of workers successed')
         
-    def _generate_python_path(self, worker_dir):
-        return "{0}:{1}".format(getcwd(), worker_dir)
-    
     def _start_worker(self,name):
         self._log.info('Starting worker: '+name)
         worker=self._workers[name]
 
-        env=environ.copy()
-        env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'])
-        
-        chdir(worker['worker_dir'])
         p=Popen(
                 [
                     worker['exec'].absolute(),
-                    worker['script'].absolute()
+                    '--ini',
+                    worker['ini_file']
                 ],
-                env=env,
                 shell=False,
                 )
 
@@ -69,34 +61,28 @@ class Workers_manager:
                 del self._active_workers[self._active_workers.index(worker)]
         self._log.debug('Zombies cleaned')
 
-    def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, **kwargs):
+    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, **kwargs):
+        self._log.info('Declaring {0} worker'.format(name))
+
         self._workers[name]={
             "name":name,
             "exec":exec,
-            "script":script,
-            "workers":workers,
-            "worker_dir":worker_dir
+            "ini_file":ini_file,
              }
 
-    def _parse_manifest(self, manifest_path:Path):
-        with open(manifest_path, 'r') as manifest_file:
-            return safe_load(manifest_file)
-            
-
-    def scan_for_workers(self):
-        path=Path(self._config.general.workers_directory)
-        for worker_dir in listdir(path):
-            worker_directory=deepcopy(path).joinpath(worker_dir)
-            if worker_directory.is_dir():
-                #TODO: add exceptions
-                worker_maifest_path=worker_directory.joinpath(MANIFEST_FILE)
-                if worker_maifest_path.is_file():
-                    args=self._parse_manifest(worker_maifest_path)
-                    if args['enabled'] == True:
-                        args['exec']=Path(args['exec'])
-                        args['script']=worker_directory.joinpath(args['script'])
-                        args['worker_dir']=worker_directory
-                        self._declare_worker(**args)
+    def scan_for_uwsgi_ini_files(self):
+        path=Path(self._config.uwsgi.ini_directory)
+        for file_name in listdir(path):
+            ini_file=deepcopy(path).joinpath(file_name)
+            self._log.info(ini_file.absolute())
+            self._log.info(ini_file.is_file())
+            if ini_file.is_file():
+                self._declare_uwsgi_worker(
+                    name=file_name,
+                    exec=Path(self._config.uwsgi.uwsgi_executable_path),
+                    ini_file=ini_file
+                )
+                
                         
     def _stop_workers(self):
         for worker in self._active_workers:
