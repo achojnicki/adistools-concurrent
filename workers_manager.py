@@ -1,9 +1,15 @@
 from constants.workers_manager import MANIFEST_FILE
 from pathlib import Path
 from subprocess import Popen
-from os import environ, getcwd, listdir, chdir, kill
+from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
 from yaml import safe_load
 from copy import deepcopy
+
+def demote(uid, gid):
+    def change_uid_gid():
+        setgid(gid)
+        setuid(uid)
+    return change_uid_gid
 
 class Workers_manager:
     _root=None
@@ -30,12 +36,12 @@ class Workers_manager:
         return count
 
     def _start_workers(self,name):
-        self._log.info('Starting workers.')
+        self._log.debug('Starting workers.')
         
         for _ in range(self._count_active_workers(name),self._workers[name]['workers']):
             self._start_worker(name)
             
-        self._log.success('Start of workers successed')
+        self._log.debug('Start of workers successed')
         
     def _generate_python_path(self, worker_dir):
         return "{0}:{1}".format(getcwd(), worker_dir)
@@ -55,6 +61,7 @@ class Workers_manager:
                 ],
                 env=env,
                 shell=False,
+                preexec_fn=demote(worker['uid'], worker['gid'])
                 )
 
         self._active_workers.append({
@@ -69,13 +76,15 @@ class Workers_manager:
                 del self._active_workers[self._active_workers.index(worker)]
         self._log.debug('Zombies cleaned')
 
-    def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, **kwargs):
+    def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, uid:int, gid: int, **kwargs):
         self._workers[name]={
             "name":name,
             "exec":exec,
             "script":script,
             "workers":workers,
-            "worker_dir":worker_dir
+            "worker_dir":worker_dir,
+            "uid":uid,
+            "gid":gid
              }
 
     def _parse_manifest(self, manifest_path:Path):

@@ -81,15 +81,7 @@ class Daemon:
         os.umask(0)
     
     def stop(self):
-        self._log.info("Called the daemon's module stop method")
-        self._root.stop()
         self._remove_pidfile()
-    
-    def _signal_handler(self, sig, frame):
-        """Callback for the signal coming from OS"""
-        self._log.debug('Got the signal')
-        if sig==signal.SIGTERM:
-            self.stop()
         
     def daemonize(self):
         """daemonizating procedure"""
@@ -106,6 +98,5 @@ class Daemon:
         self._write_pidfile()
         self._prepare_streams()
     
-        signal.signal(handler=self._signal_handler, signalnum=signal.SIGTERM)
         
         self._log.success('Daemonizing procedure successed')

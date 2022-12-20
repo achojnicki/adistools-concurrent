@@ -2,14 +2,14 @@
 
 from workers_manager import Workers_manager
 from uwsgi_manager import Uwsgi_manager
-
 from tasks import Tasks
 from daemon import Daemon
-from adislog import adislog
 
+from adislog import adislog
 from pathlib import Path
 from adisconfig import adisconfig
 from sys import exit
+from signal import signal, SIGTERM
 
 
 class adisconcurrent:
@@ -19,6 +19,7 @@ class adisconcurrent:
     _config=None
     _log=None
     _workers_manager=None
+    _uwsgi_manager=None
     _tasks=None
     
     def __init__(self):
@@ -26,9 +27,8 @@ class adisconcurrent:
         self._config=adisconfig('/etc/adisconcurrent/config.yaml')
 
         #initialisation of the log module
-        backends=['file_plain' if self._config.general.daemonize else 'terminal_table']
         self._log=adislog(
-            backends=backends,
+            backends=['file_plain' if self._config.general.daemonize else 'terminal_table'],
             log_file=Path(self._config.log.logs_directory).joinpath("adisconcurrent_main_process.log"),
             replace_except_hook=False,
             debug=self._config.log.debug,
@@ -36,7 +36,10 @@ class adisconcurrent:
             )
         
         self._log.info("Initialising Adi's Concurrent")
-        
+
+        #binding for the signals
+        signal(handler=self._signal_handler, signalnum=SIGTERM)
+
         #initialisation of the daemonization module
         if self._config.general.daemonize:
             self._daemon=Daemon(
@@ -46,21 +49,27 @@ class adisconcurrent:
         
         #initialisating all of the child objects
         self._tasks=Tasks(self)
-
         self._workers_manager=Workers_manager(self)
         self._uwsgi_manager=Uwsgi_manager(self)
         
         #scanning for the workers
         self._workers_manager.scan_for_workers()
+
+        #scanning for UWSGI ini files
         self._uwsgi_manager.scan_for_uwsgi_ini_files()
 
         #adding workers manager task to the event loop of main process
-        self._tasks.add_task('workers_manager',self._workers_manager.task, 1000)
-        self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 1000)
+        self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
+        self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
         self._log.success("Initialisation of adisconcurrent successed")
 
-        
+    def _signal_handler(self, sig, frame):
+        """Callback for the signal coming from OS"""
+        self._log.debug('Got the signal')
+        if sig==SIGTERM:
+            self.stop()
+
     def stop(self):
         self._log.info('Got the stop signal. starting the stop procedure...')
         
@@ -70,6 +79,9 @@ class adisconcurrent:
         self._workers_manager.stop()
         self._uwsgi_manager.stop()
         
+        if self._daemon:
+            self._daemon.stop()
+
         self._log.info('Exitting...')
         
         exit(0)

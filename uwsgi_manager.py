@@ -1,8 +1,14 @@
-from imp import init_builtin
 from pathlib import Path
 from subprocess import Popen
-from os import environ, getcwd, listdir, chdir, kill
+from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
 from copy import deepcopy
+
+def demote(uid, gid):
+    def change_uid_gid():
+        setgid(gid)
+        setuid(uid)
+    return change_uid_gid
+
 
 class Uwsgi_manager:
     _root=None
@@ -21,6 +27,9 @@ class Uwsgi_manager:
         
         self._log.success('Initialisation of successed!')
 
+
+
+
     def _count_active_workers(self, name:str):
         count=0
         for a in self._active_workers:
@@ -35,7 +44,7 @@ class Uwsgi_manager:
             self._start_worker(name)
             
         self._log.success('Start of workers successed')
-        
+
     def _start_worker(self,name):
         self._log.info('Starting worker: '+name)
         worker=self._workers[name]
@@ -47,6 +56,7 @@ class Uwsgi_manager:
                     worker['ini_file']
                 ],
                 shell=False,
+                preexec_fn=demote(worker['uid'],worker['gid'])
                 )
 
         self._active_workers.append({
@@ -61,13 +71,15 @@ class Uwsgi_manager:
                 del self._active_workers[self._active_workers.index(worker)]
         self._log.debug('Zombies cleaned')
 
-    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, **kwargs):
+    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, uid:int, gid:int, **kwargs):
         self._log.info('Declaring {0} worker'.format(name))
 
         self._workers[name]={
             "name":name,
             "exec":exec,
             "ini_file":ini_file,
+            "uid":uid,
+            "gid":gid
              }
 
     def scan_for_uwsgi_ini_files(self):
@@ -80,7 +92,9 @@ class Uwsgi_manager:
                 self._declare_uwsgi_worker(
                     name=file_name,
                     exec=Path(self._config.uwsgi.uwsgi_executable_path),
-                    ini_file=ini_file
+                    ini_file=ini_file,
+                    uid=self._config.uwsgi.uid,
+                    gid=self._config.uwsgi.gid
                 )
                 
                         
