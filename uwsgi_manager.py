@@ -37,14 +37,10 @@ class Uwsgi_manager:
                 count+=1
         return count
 
-    def _start_workers(self,name):
-        self._log.info('Starting workers.')
-        
+    def _start_workers(self,name):        
         for _ in range(self._count_active_workers(name),1):
             self._start_worker(name)
             
-        self._log.success('Start of workers successed')
-
     def _start_worker(self,name):
         self._log.info('Starting worker: '+name)
         worker=self._workers[name]

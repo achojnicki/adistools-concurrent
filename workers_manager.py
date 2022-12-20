@@ -35,14 +35,10 @@ class Workers_manager:
                 count+=1
         return count
 
-    def _start_workers(self,name):
-        self._log.debug('Starting workers.')
-        
+    def _start_workers(self,name):        
         for _ in range(self._count_active_workers(name),self._workers[name]['workers']):
             self._start_worker(name)
-            
-        self._log.debug('Start of workers successed')
-        
+                    
     def _generate_python_path(self, worker_dir):
         return "{0}:{1}".format(getcwd(), worker_dir)
     
