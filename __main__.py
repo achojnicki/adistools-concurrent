@@ -24,7 +24,7 @@ class adisconcurrent:
     
     def __init__(self):
         #initialisation of the config module
-        self._config=adisconfig('/etc/adisconcurrent/config.yaml')
+        self._config=adisconfig('/etc/adistools-concurrent/config.yaml')
 
         #initialisation of the log module
         self._log=adislog(
@@ -52,20 +52,23 @@ class adisconcurrent:
         self._workers_manager=Workers_manager(self)
         self._uwsgi_manager=Uwsgi_manager(self)
         
-        #scanning for the workers
-        self._workers_manager.scan_for_workers()
+        #starting workers if enabled in config
+        if self._config.general.start_workers:
+            self._workers_manager.scan_for_workers()
+            self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
+        
+        #starting UWSGI workers if enabled in config
+        if self._config.general.start_uwsgi_workers:
+            self._uwsgi_manager.scan_for_uwsgi_ini_files()
+            self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
-        #scanning for UWSGI ini files
-        self._uwsgi_manager.scan_for_uwsgi_ini_files()
 
-        #adding workers manager task to the event loop of main process
-        self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
-        self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
+
 
         self._log.success("Initialisation of adisconcurrent successed")
 
     def _signal_handler(self, sig, frame):
-        """Callback for the signal coming from OS"""
+        """Callback handler for the signal coming from OS"""
         self._log.debug('Got the signal')
         if sig==SIGTERM:
             self.stop()
@@ -88,7 +91,7 @@ class adisconcurrent:
         
 
     def start(self):
-        self._log.info("Called starting procedure")
+        self._log.info("Called start procedure")
 
         self._active=True
 

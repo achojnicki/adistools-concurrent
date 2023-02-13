@@ -16,11 +16,8 @@ class Daemon:
             root,
             pidfile,
             ):
-        
-        
         self._root=root
         self._log=self._root._log
-                
         self._pidfile=pidfile
 
         #Keeping reference of the STDIN, STDOUT and STDERR
@@ -39,12 +36,12 @@ class Daemon:
         self._stdout.flush()
         self._stderr.flush()
         
-        #Switching the STDIN, STDOUT and STDERR with the null ones
-        os.dup2(self._stdin.fileno(),self._null_stdin.fileno())
-        os.dup2(self._stdout.fileno(),self._null_stdout.fileno())
-        os.dup2(self._stderr.fileno(),self._null_stderr.fileno())
+        #Switching the STDIN, STDOUT and STDERR with the null ones - Keeping the STDIN, STDOUT and STDERR binded as we want the error messages to be readable by systemd
+        #os.dup2(self._stdin.fileno(),self._null_stdin.fileno())
+        #os.dup2(self._stdout.fileno(),self._null_stdout.fileno())
+        #os.dup2(self._stderr.fileno(),self._null_stderr.fileno())
 
-        #To make sure all the streams are redirected, replacing the sys.stdin, sys.stdout, sys.stderr - causing OSerror on attempt to raise exception
+        #To make sure all the streams are redirected, replacing the sys.stdin, sys.stdout, sys.stderr - causing OSError on attempt to raise exception
         #sys.stdin=self._null_stdin
         #sys.stdout=self._null_stdout
         #sys.stderr=self._null_stderr
@@ -98,5 +95,4 @@ class Daemon:
         self._write_pidfile()
         self._prepare_streams()
     
-        
         self._log.success('Daemonizing procedure successed')
