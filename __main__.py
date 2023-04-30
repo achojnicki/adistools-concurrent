@@ -24,7 +24,7 @@ class adisconcurrent:
     
     def __init__(self):
         #initialisation of the config module
-        self._config=adisconfig('/etc/adistools-concurrent/config.yaml')
+        self._config=adisconfig('/etc/adistools/concurrent.yaml')
 
         #initialisation of the log module
         self._log=adislog(
@@ -86,7 +86,7 @@ class adisconcurrent:
             self._daemon.stop()
 
         self._log.info('Exitting...')
-        
+
         exit(0)
         
 

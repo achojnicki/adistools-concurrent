@@ -66,11 +66,9 @@ class Workers_manager:
         })
         
     def _clear_zombies(self):
-        self._log.debug('Cleaning zombie processes')
         for worker in self._active_workers:
             if worker['process_obj'].poll() != None:
                 del self._active_workers[self._active_workers.index(worker)]
-        self._log.debug('Zombies cleaned')
 
     def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, uid:int, gid: int, **kwargs):
         self._workers[name]={

@@ -1,7 +1,8 @@
 from pathlib import Path
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
 from copy import deepcopy
+from select import select
 
 def demote(uid, gid):
     def change_uid_gid():
@@ -42,7 +43,7 @@ class Uwsgi_manager:
             self._start_worker(name)
             
     def _start_worker(self,name):
-        self._log.info('Starting worker: '+name)
+        self._log.info('Starting UWSGI worker: '+name)
         worker=self._workers[name]
 
         p=Popen(
@@ -52,7 +53,9 @@ class Uwsgi_manager:
                     worker['ini_file']
                 ],
                 shell=False,
-                preexec_fn=demote(worker['uid'],worker['gid'])
+                preexec_fn=demote(worker['uid'],worker['gid']),
+                stdout=PIPE,
+                stderr=PIPE
                 )
 
         self._active_workers.append({
@@ -61,15 +64,11 @@ class Uwsgi_manager:
         })
         
     def _clear_zombies(self):
-        self._log.debug('Cleaning zombie processes')
         for worker in self._active_workers:
             if worker['process_obj'].poll() != None:
                 del self._active_workers[self._active_workers.index(worker)]
-        self._log.debug('Zombies cleaned')
 
-    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, uid:int, gid:int, **kwargs):
-        self._log.info('Declaring {0} worker'.format(name))
-
+    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, uid:int, gid:int, **kwargs): 
         self._workers[name]={
             "name":name,
             "exec":exec,
@@ -82,8 +81,6 @@ class Uwsgi_manager:
         path=Path(self._config.uwsgi.ini_directory)
         for file_name in listdir(path):
             ini_file=deepcopy(path).joinpath(file_name)
-            self._log.info(ini_file.absolute())
-            self._log.info(ini_file.is_file())
             if ini_file.is_file():
                 self._declare_uwsgi_worker(
                     name=file_name,
@@ -105,6 +102,18 @@ class Uwsgi_manager:
     def task(self):
         # check for zombie processes
         self._clear_zombies()
+
         #start workers
         for worker in self._workers:
             self._start_workers(worker)
+        
+        #iterate through all active UWSGI workers and get the data from STDIN, STDERR
+        for process in self._active_workers:
+            x=[process['process_obj'].stdout,process['process_obj'].stderr]
+            r, w, e=select(x,[],[], .000001)
+            for a in r:
+                data=a.readline().decode('utf-8')
+                self._log.info(
+                    'Message from the {name}\'s: {data}'.format(name=process['name'], data=data)
+                )
+            
