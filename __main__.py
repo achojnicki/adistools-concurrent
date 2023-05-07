@@ -11,7 +11,6 @@ from adisconfig import adisconfig
 from sys import exit
 from signal import signal, SIGTERM
 
-
 class adisconcurrent:
     _active=None
 
@@ -62,10 +61,7 @@ class adisconcurrent:
             self._uwsgi_manager.scan_for_uwsgi_ini_files()
             self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
-
-
-
-        self._log.success("Initialisation of adisconcurrent successed")
+        self._log.success("Initialisation of adistools-concurrent successed")
 
     def _signal_handler(self, sig, frame):
         """Callback handler for the signal coming from OS"""
@@ -74,27 +70,21 @@ class adisconcurrent:
             self.stop()
 
     def stop(self):
-        self._log.info('Got the stop signal. starting the stop procedure...')
-        
-        self._active=False
+        self._log.info('Got the termination signal. Starting procedure...')
 
+        self._active=False
         self._tasks.stop()
         self._workers_manager.stop()
         self._uwsgi_manager.stop()
-        
         if self._daemon:
             self._daemon.stop()
-
-        self._log.info('Exitting...')
-
+        self._log.success('Exitting...')
         exit(0)
         
 
     def start(self):
         self._log.info("Called start procedure")
-
         self._active=True
-
         if self._daemon:
             self._log.info('starting as daemon')
             self._daemon.daemonize()
