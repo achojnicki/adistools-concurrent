@@ -23,12 +23,8 @@ class Uwsgi_manager:
         self._root=root
         self._log=root._log
         self._log.info('Starting initialization of the Uwsgi_manager')
-        
-        self._config=root._config
-        
+        self._config=root._config        
         self._log.success('Initialisation of successed!')
-
-
 
 
     def _count_active_workers(self, name:str):

@@ -23,7 +23,7 @@ class adisconcurrent:
     
     def __init__(self):
         #initialisation of the config module
-        self._config=adisconfig('/etc/adistools/concurrent.yaml')
+        self._config=adisconfig('/opt/adistools/configs/concurrent.yaml')
 
         #initialisation of the log module
         self._log=adislog(

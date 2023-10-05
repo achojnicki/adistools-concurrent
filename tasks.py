@@ -18,9 +18,7 @@ class Tasks:
 
         self._log.info("initializating Tasks module...")
         self._config=root._config
-
         self._time_divider=TIME_DIVIDER
-
         self._log.success('initialization of the tasks module successed.')
 
 
