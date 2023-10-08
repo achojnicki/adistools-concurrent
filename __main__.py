@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from workers_manager import Workers_manager
 from uwsgi_manager import Uwsgi_manager
@@ -23,7 +23,7 @@ class adisconcurrent:
     
     def __init__(self):
         #initialisation of the config module
-        self._config=adisconfig('/opt/adistools/configs/concurrent.yaml')
+        self._config=adisconfig('/opt/adistools/configs/adistools-concurrent.yaml')
 
         #initialisation of the log module
         self._log=adislog(
@@ -83,10 +83,10 @@ class adisconcurrent:
         
 
     def start(self):
-        self._log.info("Called start procedure")
+        self._log.debug("Called start method")
         self._active=True
         if self._daemon:
-            self._log.info('starting as daemon')
+            self._log.info('Starting as daemon...')
             self._daemon.daemonize()
             
         self._tasks.start()
