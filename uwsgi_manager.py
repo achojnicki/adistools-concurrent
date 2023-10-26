@@ -37,10 +37,17 @@ class Uwsgi_manager:
     def _start_workers(self,name):        
         for _ in range(self._count_active_workers(name),1):
             self._start_worker(name)
-            
+
+    def _generate_python_path(self, modules_dir):
+        return "{0}".format(modules_dir)
+    
     def _start_worker(self,name):
         self._log.info('Starting UWSGI worker: '+name)
         worker=self._workers[name]
+        
+
+        env=environ.copy()
+        env['PYTHONPATH']=self._generate_python_path(self._config.modules.modules_directory)
 
         p=Popen(
                 [
@@ -51,7 +58,8 @@ class Uwsgi_manager:
                 shell=False,
                 preexec_fn=demote(worker['uid'],worker['gid']),
                 stdout=PIPE,
-                stderr=PIPE
+                stderr=PIPE,
+                env=env
                 )
 
         self._active_workers.append({

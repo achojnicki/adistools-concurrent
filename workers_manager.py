@@ -39,15 +39,15 @@ class Workers_manager:
         for _ in range(self._count_active_workers(name),self._workers[name]['workers']):
             self._start_worker(name)
                     
-    def _generate_python_path(self, worker_dir):
-        return "{0}:{1}".format(getcwd(), worker_dir)
+    def _generate_python_path(self, worker_dir, modules_dir):
+        return "{0}:{1}".format(worker_dir, modules_dir)
     
     def _start_worker(self,name):
         self._log.info('Starting worker: '+name)
         worker=self._workers[name]
 
         env=environ.copy()
-        env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'])
+        env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'], self._config.modules.modules_directory)
         
         chdir(worker['worker_dir'])
         p=Popen(
