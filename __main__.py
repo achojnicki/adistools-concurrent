@@ -29,7 +29,7 @@ class adisconcurrent:
         self._log=adislog(
             app_name="adistools-concurrent",
             backends=['file_plain' if self._config.general.daemonize else 'terminal_table'],
-            log_file=Path(self._config.log.logs_directory).joinpath("adistools-concurrent.log"),
+            log_file=Path(self._config.directories.logs_directory).joinpath("adistools-concurrent.log"),
             replace_except_hook=False,
             debug=self._config.log.debug,
             privacy=True if self._config.log.debug else False,

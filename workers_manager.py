@@ -47,7 +47,7 @@ class Workers_manager:
         worker=self._workers[name]
 
         env=environ.copy()
-        env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'], self._config.modules.modules_directory)
+        env['PYTHONPATH']=self._generate_python_path(worker['worker_dir'], self._config.directories.modules_directory)
         
         chdir(worker['worker_dir'])
         p=Popen(
@@ -87,7 +87,7 @@ class Workers_manager:
             
 
     def scan_for_workers(self):
-        path=Path(self._config.general.workers_directory)
+        path=Path(self._config.directories.workers_directory)
         for worker_dir in listdir(path):
             worker_directory=deepcopy(path).joinpath(worker_dir)
             if worker_directory.is_dir():

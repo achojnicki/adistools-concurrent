@@ -47,7 +47,7 @@ class Uwsgi_manager:
         
 
         env=environ.copy()
-        env['PYTHONPATH']=self._generate_python_path(self._config.modules.modules_directory)
+        env['PYTHONPATH']=self._generate_python_path(self._config.directories.modules_directory)
 
         p=Popen(
                 [
@@ -82,7 +82,7 @@ class Uwsgi_manager:
              }
 
     def scan_for_uwsgi_ini_files(self):
-        path=Path(self._config.uwsgi.ini_directory)
+        path=Path(self._config.directories.ini_directory)
         for file_name in listdir(path):
             ini_file=deepcopy(path).joinpath(file_name)
             if ini_file.is_file():
