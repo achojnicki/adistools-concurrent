@@ -85,7 +85,7 @@ class Uwsgi_manager:
         path=Path(self._config.directories.ini_directory)
         for file_name in listdir(path):
             ini_file=deepcopy(path).joinpath(file_name)
-            if ini_file.is_file():
+            if ini_file.is_file() and '.ini' in file_name:
                 self._declare_uwsgi_worker(
                     name=file_name,
                     exec=Path(self._config.uwsgi.uwsgi_executable_path),
@@ -111,7 +111,7 @@ class Uwsgi_manager:
         for worker in self._workers:
             self._start_workers(worker)
         
-        #iterate through all active UWSGI workers and get the data from STDIN, STDERR
+        #iterate through all active UWSGI workers and get the data from STDOUT and STDERR
         for process in self._active_workers:
             x=[process['process_obj'].stdout,process['process_obj'].stderr]
             r, w, e=select(x,[],[], .000001)
