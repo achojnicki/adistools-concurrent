@@ -26,9 +26,9 @@ class Daemon:
         self._stderr=sys.stderr
         
         #Opening null device to replace the STDIN, STDOUT AND STDERR
-        self._null_stdin=open('/dev/null','r')
-        self._null_stdout=open('/dev/null','a+')
-        self._null_stderr=open('/dev/null','a+')
+        #self._null_stdin=open('/dev/null','r')
+        #self._null_stdout=open('/dev/null','a+')
+        #self._null_stderr=open('/dev/null','a+')
         
         
     def _prepare_streams(self):
