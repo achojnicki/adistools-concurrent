@@ -23,7 +23,8 @@ class Uwsgi_manager:
         self._root=root
         self._log=root._log
         self._log.info('Starting initialization of the UWSGI_manager')
-        self._config=root._config       
+        self._config=root._config 
+        self._config_uwsgi_workers=root._config_uwsgi_workers
          
         self._log.success('Initialisation of UWSGI_manager successed!')
 
@@ -82,17 +83,18 @@ class Uwsgi_manager:
             "gid":gid
              }
 
-    def scan_for_uwsgi_ini_files(self):
-        path=Path(self._config.directories.ini_directory)
-        for file_name in listdir(path):
-            ini_file=deepcopy(path).joinpath(file_name)
-            if ini_file.is_file() and '.ini' in file_name:
+    def load_uwsgi_workers(self):
+        for worker in self._config_uwsgi_workers:
+            settings=self._config_uwsgi_workers[worker]
+            ini_file=Path(self._config.directories.ini_directory+"/"+worker+'.ini')
+
+            if settings['enable'] and ini_file.is_file():
                 self._declare_uwsgi_worker(
-                    name=file_name,
+                    name=worker,
                     exec=Path(self._config.uwsgi.uwsgi_executable_path),
                     ini_file=ini_file,
-                    uid=self._config.uwsgi.uid,
-                    gid=self._config.uwsgi.gid
+                    uid=settings['uid'],
+                    gid=settings['gid']
                 )
                 
                         
@@ -118,7 +120,5 @@ class Uwsgi_manager:
             r, w, e=select(x,[],[], .000001)
             for a in r:
                 data=a.readline().decode('utf-8')
-                self._log.info(
-                    'Message from the {name}\'s: {data}'.format(name=process['name'], data=data)
-                )
+                self._log.info(project_name=process['name'], log_item=data)
             

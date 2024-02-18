@@ -25,6 +25,9 @@ class adisconcurrent:
         #initialisation of the config module
         self._config=adisconfig('/opt/adistools/configs/adistools-concurrent.yaml')
 
+        self._config_workers=adisconfig('/opt/adistools/configs/adistools-concurrent_workers.yaml')
+        self._config_uwsgi_workers=adisconfig('/opt/adistools/configs/adistools-concurrent_uwsgi_workers.yaml')
+
         #initialisation of the log module
         self._log=adislog(
             project_name="adistools-concurrent",
@@ -54,12 +57,12 @@ class adisconcurrent:
         
         #starting workers if enabled in config
         if self._config.general.start_workers:
-            self._workers_manager.scan_for_workers()
+            self._workers_manager.load_workers()
             self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
         
         #starting UWSGI workers if enabled in config
         if self._config.general.start_uwsgi_workers:
-            self._uwsgi_manager.scan_for_uwsgi_ini_files()
+            self._uwsgi_manager.load_uwsgi_workers()
             self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
         self._log.success("Initialisation of adistools-concurrent successed")

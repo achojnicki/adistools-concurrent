@@ -1,9 +1,11 @@
 from constants.workers_manager import MANIFEST_FILE
 from pathlib import Path
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
 from yaml import safe_load
 from copy import deepcopy
+from select import select
+
 
 def demote(uid, gid):
     def change_uid_gid():
@@ -25,6 +27,7 @@ class Workers_manager:
         self._log.info('Starting initialization of the Workers_manager')
         
         self._config=root._config
+        self._config_workers=root._config_workers
         
         self._log.success('Initialisation of workers_manager successed!')
 
@@ -57,13 +60,16 @@ class Workers_manager:
                 ],
                 env=env,
                 shell=False,
-                preexec_fn=demote(worker['uid'], worker['gid'])
+                preexec_fn=demote(worker['uid'], worker['gid']),
+                stdout=PIPE,
+                stderr=PIPE
                 )
 
         self._active_workers.append({
             "name":name,
             'process_obj': p
         })
+        chdir(self._config.directories.main_directory)
         
     def _clear_zombies(self):
         for worker in self._active_workers:
@@ -86,20 +92,23 @@ class Workers_manager:
             return safe_load(manifest_file)
             
 
-    def scan_for_workers(self):
-        path=Path(self._config.directories.workers_directory)
-        for worker_dir in listdir(path):
-            worker_directory=deepcopy(path).joinpath(worker_dir)
-            if worker_directory.is_dir():
-                #TODO: add exceptions
-                worker_maifest_path=worker_directory.joinpath(MANIFEST_FILE)
-                if worker_maifest_path.is_file():
-                    args=self._parse_manifest(worker_maifest_path)
-                    if args['enabled'] == True:
-                        args['exec']=Path(args['exec'])
-                        args['script']=worker_directory.joinpath(args['script'])
-                        args['worker_dir']=worker_directory
-                        self._declare_worker(**args)
+    def load_workers(self):
+        for worker in self._config_workers:
+            settings=self._config_workers[worker]
+            manifest_file=Path(self._config.directories.workers_directory) / worker / "manifest.yaml"
+            manifest=self._parse_manifest(manifest_file)            
+
+            if settings['enable']:
+                self._declare_worker(
+                    name=worker,
+                    exec=Path(manifest['exec']),
+                    script=Path(self._config.directories.workers_directory) / worker / manifest['script'],
+                    uid=settings['uid'],
+                    gid=settings['gid'],
+                    workers=settings['workers_count'],
+                    worker_dir=Path(self._config.directories.workers_directory) / worker
+                )
+
                         
     def _stop_workers(self):
         for worker in self._active_workers:
@@ -115,3 +124,17 @@ class Workers_manager:
         #start workers
         for worker in self._workers:
             self._start_workers(worker)
+
+        #iterate through all active UWSGI workers and get the data from STDOUT and STDERR
+        for process in self._active_workers:
+            x=[process['process_obj'].stdout]
+            r, w, e=select(x,[],[], .000001)
+            for a in r:
+                data=a.read().decode('utf-8')
+                self._log.info(project_name=process['name'], log_item=data)
+
+            x=[process['process_obj'].stderr]
+            r, w, e=select(x,[],[], .000001)
+            for a in r:
+                data=a.read().decode('utf-8')
+                self._log.error(project_name=process['name'], log_item=data)
