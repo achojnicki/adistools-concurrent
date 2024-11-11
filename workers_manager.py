@@ -125,12 +125,6 @@ class Workers_manager:
         self._stop_workers()
 
     def task(self):
-        # check for zombie processes
-        self._clear_zombies()
-        #start workers
-        for worker in self._workers:
-            self._start_workers(worker)
-
         #iterate through all active UWSGI workers and get the data from STDOUT and STDERR
         for process in self._active_workers:
             x=[process['process_obj'].stdout]
@@ -156,3 +150,7 @@ class Workers_manager:
                     if "\n" in self._stderr_line_buffer:
                         self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
                         self._stderr_line_buffer=""
+
+        self._clear_zombies()
+        for worker in self._workers:
+            self._start_workers(worker)
