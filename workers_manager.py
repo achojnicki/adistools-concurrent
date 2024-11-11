@@ -82,7 +82,7 @@ class Workers_manager:
             if worker['process_obj'].poll() != None:
                 del self._active_workers[self._active_workers.index(worker)]
 
-    def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, uid:int, gid: int, **kwargs):
+    def _declare_worker(self,name:str, exec:Path, script:Path, workers:int, worker_dir:Path, uid:int, gid: int, stderr_as_info: bool, **kwargs):
         self._workers[name]={
             "name":name,
             "exec":exec,
@@ -90,7 +90,8 @@ class Workers_manager:
             "workers":workers,
             "worker_dir":worker_dir,
             "uid":uid,
-            "gid":gid
+            "gid":gid,
+            "stderr_as_info": stderr_as_info
              }
 
     def _parse_manifest(self, manifest_path:Path):
@@ -112,7 +113,8 @@ class Workers_manager:
                     uid=settings['uid'],
                     gid=settings['gid'],
                     workers=settings['workers_count'],
-                    worker_dir=Path(self._config.directories.workers_directory) / worker
+                    worker_dir=Path(self._config.directories.workers_directory) / worker,
+                    stderr_as_info=settings['stderr_as_info'] if "stderr_as_info" in settings else False
                 )
 
                         
@@ -148,7 +150,10 @@ class Workers_manager:
                     self._stderr_line_buffer+=data.decode('utf-8')
 
                     if "\n" in self._stderr_line_buffer:
-                        self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        if not self._workers[process['name']]['stderr_as_info']:
+                            self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        else:
+                            self._log.info(project_name=process['name'], log_item=self._stderr_line_buffer)
                         self._stderr_line_buffer=""
 
         self._clear_zombies()

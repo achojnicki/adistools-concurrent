@@ -81,13 +81,14 @@ class Uwsgi_manager:
             if worker['process_obj'].poll() != None:
                 del self._active_workers[self._active_workers.index(worker)]
 
-    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, uid:int, gid:int, **kwargs): 
+    def _declare_uwsgi_worker(self,name:str, exec:Path, ini_file:Path, uid:int, gid:int, stderr_as_info: bool, **kwargs): 
         self._workers[name]={
             "name":name,
             "exec":exec,
             "ini_file":ini_file,
             "uid":uid,
-            "gid":gid
+            "gid":gid,
+            "stderr_as_info": stderr_as_info
              }
 
     def load_uwsgi_workers(self):
@@ -101,7 +102,8 @@ class Uwsgi_manager:
                     exec=Path(self._config.uwsgi.uwsgi_executable_path),
                     ini_file=ini_file,
                     uid=settings['uid'],
-                    gid=settings['gid']
+                    gid=settings['gid'],
+                    stderr_as_info=settings['stderr_as_info'] if "stderr_as_info" in settings else False
                 )
                 
                         
@@ -138,7 +140,10 @@ class Uwsgi_manager:
                     self._stderr_line_buffer+=data.decode('utf-8')
 
                     if "\n" in self._stderr_line_buffer:
-                        self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        if not self._workers[process['name']]['stderr_as_info']:
+                            self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        else:
+                            self._log.info(project_name=process['name'], log_item=self._stderr_line_buffer)
                         self._stderr_line_buffer=""
             
         self._clear_zombies()
