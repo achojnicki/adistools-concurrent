@@ -28,14 +28,30 @@ class adisconcurrent:
         self._config_workers=adisconfig('/opt/adistools/configs/adistools-concurrent_workers.yaml')
         self._config_uwsgi_workers=adisconfig('/opt/adistools/configs/adistools-concurrent_uwsgi_workers.yaml')
 
+        _backends=[]
+        if not self._config.general.daemonize:
+            if self._config.log.print_log:
+                if self._config.log.print_log_mode == 'colorful':
+                    _backends.append('terminal_colorful')
+                elif self._config.log.print_log_mode == 'table':
+                    _backends.append('terminal_table')
+                elif self._config.log.print_log_mode == 'terminal':
+                    _backends.append('terminal')
+        else:
+            if self._config.log.report_to_systemd:
+                _backends.append('terminal')
+
+        if self._config.log.save_to_file:
+            _backends.append('file_plain')
+
+
         #initialisation of the log module
         self._log=adislog(
             project_name="adistools-concurrent",
-            backends=['file_plain' if self._config.general.daemonize else 'terminal_table'],
+            backends=_backends,
             log_file=Path(self._config.directories.logs_directory).joinpath("adistools-concurrent.log"),
-            replace_except_hook=False,
             debug=self._config.log.debug,
-            privacy=True if self._config.log.debug else False,
+            privacy=self._config.log.privacy,
             )
         
         self._log.info("Initialising Adi's Concurrent")
@@ -65,7 +81,7 @@ class adisconcurrent:
             self._uwsgi_manager.load_uwsgi_workers()
             self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
-        self._log.success("Initialisation of adistools-concurrent successed")
+        self._log.success("Initialisation of adistools-concurrent succeeded")
 
     def _signal_handler(self, sig, frame):
         """Callback handler for the signal coming from OS"""
@@ -74,7 +90,7 @@ class adisconcurrent:
             self.stop()
 
     def stop(self):
-        self._log.info('Got the termination signal. Starting procedure...')
+        self._log.info('Got  termination signal. Starting procedure...')
 
         self._active=False
         self._tasks.stop()

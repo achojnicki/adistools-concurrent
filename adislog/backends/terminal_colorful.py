@@ -10,6 +10,7 @@ class terminal_colorful:
     
     def emit(
         self,
+        project_name:str,
         message:str,
         datetime:str,
         filename:str,
@@ -21,6 +22,7 @@ class terminal_colorful:
         cwd:str):
 
         msg_data={
+        "project_name": project_name,
         "datetime":datetime,
         "filename":filename,
         "function":stylize(function,fg(248)),
