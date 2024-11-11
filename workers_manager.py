@@ -1,7 +1,7 @@
 from constants.workers_manager import MANIFEST_FILE
 from pathlib import Path
 from subprocess import Popen, PIPE
-from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
+from os import environ, getcwd, listdir, chdir, kill, setuid, setgid, set_blocking
 from yaml import safe_load
 from copy import deepcopy
 from select import select
@@ -20,6 +20,9 @@ class Workers_manager:
 
     _workers={}
     _active_workers=[]
+
+    _stdout_line_buffer=""
+    _stderr_line_buffer=""
 
     def __init__(self, root):
         self._root=root
@@ -64,6 +67,9 @@ class Workers_manager:
                 stdout=PIPE,
                 stderr=PIPE
                 )
+
+        set_blocking(p.stdout.fileno(), False)
+        set_blocking(p.stderr.fileno(), False)
 
         self._active_workers.append({
             "name":name,
@@ -130,11 +136,23 @@ class Workers_manager:
             x=[process['process_obj'].stdout]
             r, w, e=select(x,[],[], .000001)
             for a in r:
-                data=a.read().decode('utf-8')
-                self._log.info(project_name=process['name'], log_item=data)
+                data=a.read()
+
+                if data:
+                    self._stdout_line_buffer+=data.decode('utf-8')
+
+                    if "\n" in self._stdout_line_buffer:
+                        self._log.info(project_name=process['name'], log_item=self._stdout_line_buffer)
+                        self._stdout_line_buffer=""
 
             x=[process['process_obj'].stderr]
             r, w, e=select(x,[],[], .000001)
             for a in r:
-                data=a.read().decode('utf-8')
-                self._log.error(project_name=process['name'], log_item=data)
+                data=a.read()
+
+                if data:
+                    self._stderr_line_buffer+=data.decode('utf-8')
+
+                    if "\n" in self._stderr_line_buffer:
+                        self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        self._stderr_line_buffer=""

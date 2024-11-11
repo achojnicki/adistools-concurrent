@@ -1,6 +1,6 @@
 from pathlib import Path
 from subprocess import Popen, PIPE
-from os import environ, getcwd, listdir, chdir, kill, setuid, setgid
+from os import environ, getcwd, listdir, chdir, kill, setuid, setgid, set_blocking
 from copy import deepcopy
 from select import select
 
@@ -18,6 +18,9 @@ class Uwsgi_manager:
 
     _workers={}
     _active_workers=[]
+    
+    _stdout_line_buffer=""
+    _stderr_line_buffer=""
 
     def __init__(self, root):
         self._root=root
@@ -63,6 +66,10 @@ class Uwsgi_manager:
                 stderr=PIPE,
                 env=env
                 )
+        set_blocking(p.stdout.fileno(), False)
+        set_blocking(p.stderr.fileno(), False)
+
+
 
         self._active_workers.append({
             "name":name,
@@ -116,9 +123,27 @@ class Uwsgi_manager:
         
         #iterate through all active UWSGI workers and get the data from STDOUT and STDERR
         for process in self._active_workers:
-            x=[process['process_obj'].stdout,process['process_obj'].stderr]
+            x=[process['process_obj'].stdout]
             r, w, e=select(x,[],[], .000001)
             for a in r:
-                data=a.readline().decode('utf-8')
-                self._log.info(project_name=process['name'], log_item=data)
+                data=a.read()
+
+                if data:
+                    self._stdout_line_buffer+=data.decode('utf-8')
+
+                    if "\n" in self._stdout_line_buffer:
+                        self._log.info(project_name=process['name'], log_item=self._stdout_line_buffer)
+                        self._stdout_line_buffer=""
+
+            x=[process['process_obj'].stderr]
+            r, w, e=select(x,[],[], .000001)
+            for a in r:
+                data=a.read()
+
+                if data:
+                    self._stderr_line_buffer+=data.decode('utf-8')
+
+                    if "\n" in self._stderr_line_buffer:
+                        self._log.error(project_name=process['name'], log_item=self._stderr_line_buffer)
+                        self._stderr_line_buffer=""
             

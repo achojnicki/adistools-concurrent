@@ -3,7 +3,6 @@
 from .methods import adislog_methods 
 from .inspect import inspect
 from .process import get_process_details
-from .traceback import parse_frame
 from .exceptions import EXCEPTION_BACKEND_DO_NOT_EXISTS
 
 from pprint import pformat
@@ -19,7 +18,6 @@ class adislog(adislog_methods):
                  privacy:bool=True,
                  debug:bool=False,
                  init_message:str="adislog module initializated.",
-                 replace_except_hook:bool=False,
                  backends:list or array=['file_plain','terminal_table'],
                  project_name:str="Default",
                  rabbitmq_host=None,
@@ -47,7 +45,6 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
         self._privacy=privacy
         self._debug=debug
         self._init_message=init_message
-        self._replace_except_hook=replace_except_hook
         self._project_name=project_name
         self._exception_data=[]
         
@@ -92,8 +89,6 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
             if o:
                 self._backends.append(o)
             
-        if self._replace_except_hook:
-            sys.excepthook=self._except
                     
     def _init_msg(self):
         self.info(self._init_message)
@@ -131,9 +126,6 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
             **process_details
             }
 
-            if self._exception_data:
-                msg['excpt_data']=[parse_frame(a) for a in self._exception_data] 
-                
             self._emit_to_backends(msg)
 
 
