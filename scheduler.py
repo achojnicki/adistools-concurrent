@@ -6,7 +6,7 @@ from time import sleep,time
 import os
 import sys
 
-class Tasks:
+class Scheduler:
     _active=None
     _root=None
 
@@ -16,17 +16,17 @@ class Tasks:
         self._root=root
         self._log=root._log
 
-        self._log.info("initializating Tasks module...")
+        self._log.debug("initializating scheduler module...")
         self._config=root._config
         self._time_divider=TIME_DIVIDER
-        self._log.success('initialization of the tasks module successed.')
+        self._log.debug('initialization of the scheduler module successed.')
 
 
     def add_task(self,name,callback,execution_interval=None):
         self._tasks.append([name,callback,execution_interval,0])
 
     def _loop(self):
-        self._log.info("Starting Task's mainloop")
+        self._log.debug("Starting Task's mainloop")
         try:
             time_divider=self._time_divider
             while self._active:
@@ -43,20 +43,20 @@ class Tasks:
                         if t-a[3]>=a[2]:
                             a[1]()
                             a[3]=time()*time_divider
-                sleep(self._config.tasks.interval)
+                sleep(self._config.scheduler.interval)
         except KeyboardInterrupt:
             self._root.stop()
 
     def start(self):
-        self._log.info('Starting tasks module...')
+        self._log.debug('Starting scheduler module...')
         
         self._active=True
         self._loop()
 
 
     def stop(self):
-        self._log.info("Stopping Tasks module...")
+        self._log.info("Stopping scheduler module...")
         
         self._active=False
 
-        self._log.info('Tasks module stopped')
+        self._log.info('Scheduler stopped')

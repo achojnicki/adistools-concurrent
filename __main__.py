@@ -2,7 +2,7 @@
 
 from workers_manager import Workers_manager
 from uwsgi_manager import Uwsgi_manager
-from tasks import Tasks
+from scheduler import Scheduler
 from daemon import Daemon
 
 from adislog import adislog
@@ -19,7 +19,7 @@ class adisconcurrent:
     _log=None
     _workers_manager=None
     _uwsgi_manager=None
-    _tasks=None
+    _scheduler=None
     
     def __init__(self):
         #initialisation of the config module
@@ -67,21 +67,21 @@ class adisconcurrent:
                 )
         
         #initialisating all of the child objects
-        self._tasks=Tasks(self)
+        self._scheduler=Scheduler(self)
         self._workers_manager=Workers_manager(self)
         self._uwsgi_manager=Uwsgi_manager(self)
         
         #starting workers if enabled in config
         if self._config.general.start_workers:
             self._workers_manager.load_workers()
-            self._tasks.add_task('workers_manager',self._workers_manager.task, 100)
+            self._scheduler.add_task('workers_manager',self._workers_manager.task, 100)
         
         #starting UWSGI workers if enabled in config
         if self._config.general.start_uwsgi_workers:
             self._uwsgi_manager.load_uwsgi_workers()
-            self._tasks.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
+            self._scheduler.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
-        self._log.success("Initialisation of adistools-concurrent succeeded")
+        self._log.info("Initialisation of adistools-concurrent succeeded")
 
     def _signal_handler(self, sig, frame):
         """Callback handler for the signal coming from OS"""
@@ -90,10 +90,10 @@ class adisconcurrent:
             self.stop()
 
     def stop(self):
-        self._log.info('Got  termination signal. Starting procedure...')
+        self._log.debug('Got termination signal. Starting procedure...')
 
         self._active=False
-        self._tasks.stop()
+        self._scheduler.stop()
         self._workers_manager.stop()
         self._uwsgi_manager.stop()
         if self._daemon:
@@ -109,7 +109,7 @@ class adisconcurrent:
             self._log.info('Starting as daemon...')
             self._daemon.daemonize()
             
-        self._tasks.start()
+        self._scheduler.start()
 
 if __name__=="__main__":
     ac=adisconcurrent()
