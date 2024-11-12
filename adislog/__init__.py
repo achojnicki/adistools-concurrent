@@ -4,12 +4,12 @@ from .methods import adislog_methods
 from .inspect import inspect
 from .process import get_process_details
 from .exceptions import EXCEPTION_BACKEND_DO_NOT_EXISTS
+from .traceback import traceback
 
 from pprint import pformat
 from time import strftime
+from sys import exit
 
-import sys
-import traceback
 
 class adislog(adislog_methods):
     def __init__(self,
@@ -46,11 +46,9 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
         self._debug=debug
         self._init_message=init_message
         self._project_name=project_name
-        self._exception_data=[]
-        
+
         self._inspect=inspect(privacy=self._privacy)
-        
-        
+        self._traceback=traceback()
         
         for a in backends:
             o=None        
@@ -132,20 +130,4 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
     def _emit_to_backends(self, msg):
         for backend in self._backends:
             backend.emit(**msg)
-
-    def _parse_tb(self, tb):
-        self._exception_data.append(tb.tb_frame)
-
-    def _except(self, etype,value, tb):
-        #TODO: use the value: traceback.format_exception(value)
-
-        while True:
-            self._parse_tb(tb)
-            if tb.tb_next:
-                tb=tb.tb_next
-            else:
-                break
-            
-        self.fatal("Exception %s occured!" % value)
-        sys.exit(1)
         

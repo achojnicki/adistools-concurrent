@@ -18,4 +18,12 @@ class adislog_methods:
     
     def success(self, *args, **kwargs):
         self._message(LEVEL_SUCCESS,*args, **kwargs)
+
+    def exception(self, as_fatal=True, project_name=None):
+        excpt=self._traceback.get_exception()
+        self._message(
+            log_level=4 if as_fatal else 3,
+            project_name=project_name if project_name else self._project_name,
+            log_item=excpt
+            )
          
