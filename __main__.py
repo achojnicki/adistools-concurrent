@@ -104,7 +104,7 @@ class adisconcurrent:
         except:
             self._log.fatal('Initialisation failed. Exitting...')
             self._log.exception()
-            exit(4)
+            exit(5)
 
     def _signal_handler(self, sig, frame):
         """Callback handler for the signal coming from OS"""
