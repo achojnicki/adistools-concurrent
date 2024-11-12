@@ -32,7 +32,7 @@ class file_plain:
                 log_level=LOG_LEVELS[log_level],
                 pid=pid,
                 ppid=ppid,
-                cwd=cwd)
+                cwd=cwd)+"\n"
             
             log_file.write(msg)
         

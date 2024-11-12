@@ -19,7 +19,7 @@ class Scheduler:
         self._log.debug("initializating scheduler module...")
         self._config=root._config
         self._time_divider=TIME_DIVIDER
-        self._log.debug('initialization of the scheduler module successed.')
+        self._log.success('initialization of the scheduler module successed.')
 
 
     def add_task(self,name,callback,execution_interval=None):

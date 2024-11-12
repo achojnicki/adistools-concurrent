@@ -81,7 +81,7 @@ class adisconcurrent:
             self._uwsgi_manager.load_uwsgi_workers()
             self._scheduler.add_task('uwsgi_manager',self._uwsgi_manager.task, 100)
 
-        self._log.info("Initialisation of adistools-concurrent succeeded")
+        self._log.success("Initialisation of adistools-concurrent succeeded")
 
     def _signal_handler(self, sig, frame):
         """Callback handler for the signal coming from OS"""
