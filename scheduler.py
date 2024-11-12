@@ -55,8 +55,8 @@ class Scheduler:
 
 
     def stop(self):
-        self._log.info("Stopping scheduler module...")
+        self._log.debug("Stopping scheduler module...")
         
         self._active=False
 
-        self._log.info('Scheduler stopped')
+        self._log.debug('Scheduler stopped')
