@@ -24,7 +24,6 @@ class adisconcurrent:
     def __init__(self):
         try:
             self._config=adisconfig('/opt/adistools/configs/adistools-concurrent.yaml')
-
         except:
             print("Fatal error during loading the main config file. Exitting...")
             exit(1)
@@ -65,7 +64,6 @@ class adisconcurrent:
                 backends=_backends,
                 log_file=Path(self._config.directories.logs_directory).joinpath("adistools-concurrent.log"),
                 debug=self._config.log.debug,
-                privacy=self._config.log.privacy,
                 )
         except:
             print("Fatal Error during initializating the log module. Exitting")

@@ -15,7 +15,6 @@ class adislog(adislog_methods):
     def __init__(self,
                  time_format=None,
                  log_file:str=None,
-                 privacy:bool=True,
                  debug:bool=False,
                  init_message:str="adislog module initializated.",
                  backends:list or array=['file_plain','terminal_table'],
@@ -42,12 +41,11 @@ Note that all of the console backends writes the fatal messages to the STDERR pi
         self._backends=[]
         self._time_format="%d/%m/%Y %H:%M:%S" if time_format is None else time_format
         self._log_file='log.log' if log_file is None else log_file
-        self._privacy=privacy
         self._debug=debug
         self._init_message=init_message
         self._project_name=project_name
 
-        self._inspect=inspect(privacy=self._privacy)
+        self._inspect=inspect()
         self._traceback=traceback()
         
         for a in backends:
